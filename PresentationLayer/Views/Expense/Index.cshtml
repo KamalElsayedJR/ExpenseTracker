@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ExpenseDto>
+@{
+    ViewData["Title"] = "Expense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }else if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+<h1>Your Expenses</h1>
+@{
+    if (Model is null)
+    {
+        <div class="alert-danger" role="alert">
+            No expenses found.
+        </div>
+    }
+    else
+    {
+        <div class="datatable-container">
+            <!-- ======= Header tools ======= -->
+            <div class="header-tools">
+                <div class="tools">
+                    <ul>
+                        <li>
+                            <button>
+                                <i class="material-icons"><a asp-controller="Expense" asp-action="NewExpense" class="btn text-white">AddNewExpense</a></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <!-- ======= Table ======= -->
+                <table class="datatable">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td><span>$</span>@item.Amount</td>
+                                    <td>@item.Title</td>
+                                    <td>@item.Date</td>
+                                    <td>
+                                        <a asp-controller="Expense"
+                                           asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-primary">
+                                            Edit
+                                        </a>
+
+                                        <a asp-controller="Expense"
+                                           asp-action="Delete"
+                                           asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-danger">
+                                            Delete
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        <tr class="table-dark fw-bold border-top">
+                            <td>
+                                Total: $@Model.Sum(x => x.Amount)
+                            </td>
+                            <td colspan="3"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+
+

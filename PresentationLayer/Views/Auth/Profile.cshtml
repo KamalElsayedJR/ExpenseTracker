@@ -1,0 +1,22 @@
+﻿@model UserDto
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout";
+}
+
+<h1>Profile</h1>
+<div data-mdb-input-init class="form-outline form-white mb-4 mt-4 text-start">
+    <label id="UserId">ID</label>
+    <input type="text" asp-for="Id" class="form-control text-white bg-dark form-control-lg text-start" readonly />
+</div>
+<div data-mdb-input-init class="form-outline form-white mb-4 mt-4 text-start">
+    <label id="Email">Email</label>
+    <input type="email" asp-for="Email" class="form-control text-white bg-dark form-control-lg text-start" readonly />
+
+</div>
+<div data-mdb-input-init class="form-outline form-white mb-4 mt-4 text-start">
+    <label id="UserName">UserName</label>
+    <input type="text" asp-for="UserName" class="form-control text-white bg-dark form-control-lg text-start" readonly />
+</div>
+
+

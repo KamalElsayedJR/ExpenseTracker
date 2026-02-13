@@ -1,0 +1,35 @@
+﻿@model ExpenseDto
+@{
+    ViewData["Title"] = "Expense";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+<div>
+    <div class="mb-md-3 mt-md-2 ">
+        <h2 class="fw-bold mb-5 text-uppercase">Expense</h2>
+        <form asp-action="NewExpense" method="post">
+            <div data-mdb-input-init class="form-outline form-white mb-4">
+                <span asp-validation-for="Title" class="text-danger"></span>
+                <input type="text" asp-for="Title" class="form-control text-white bg-dark form-control-lg" placeholder="Title" />
+            </div>
+            <div data-mdb-input-init class="form-outline form-white mb-4">
+                <span asp-validation-for="Amount" class="text-danger"></span>
+                <input type="number" asp-for="Amount" class="form-control text-white bg-dark form-control-lg" placeholder="Amount" />
+            </div>
+            <div data-mdb-input-init class="form-outline form-white mb-4">
+                <span asp-validation-for="Date" class="text-danger"></span>
+                <input type="date" asp-for="Date" class="form-control text-white bg-dark form-control-lg" />
+            </div>
+            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" name="submit" type="submit">Add</button>
+        </form>
+    </div>
+</div>
+@section ClientSideValidation {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
