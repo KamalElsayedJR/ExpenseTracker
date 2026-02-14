@@ -21,8 +21,17 @@ namespace BusinessLogicLayer.Implementaions.Services
             _uow = Uow;
             _mapper = mapper;
         }
-        public async Task<BaseResponse> AddExpenseAsync(decimal Amount, string Title, DateOnly Date, string UserId)
+        public async Task<BaseResponse> AddExpenseAsync(decimal Amount, string Title, DateOnly Date, string UserId,int catId)
         {
+            var cat = await _uow.CategoryRepo.GetCategoryByIdAsync(catId,UserId);
+            if (cat is null)
+            {
+                return new BaseResponse()
+                {
+                    IsSuccess = false,
+                    Message = "Category not found",
+                };
+            }
             if (Amount > 0.1m && !string.IsNullOrEmpty(Title) && !string.IsNullOrEmpty(UserId))
             {
                 var expense = new Expense
@@ -30,7 +39,9 @@ namespace BusinessLogicLayer.Implementaions.Services
                     Amount = Amount,
                     Title = Title,
                     Date = Date,
-                    UserId = UserId
+                    UserId = UserId,
+                    CategoryId = cat.Id,
+                    Category = cat
                 };
                 await _uow.GenericRepo<Expense>().AddAsync(expense);
                 var result = await _uow.SaveChangesAsync();

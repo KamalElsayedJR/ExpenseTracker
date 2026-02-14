@@ -23,6 +23,11 @@ namespace DataAccessLayer.Configurations
                 .WithMany(u => u.Expenses)
                 .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+                builder.HasOne(e => e.Category)
+                .WithMany(c => c.Expenses)
+                .HasForeignKey(e => e.CategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -1,0 +1,27 @@
+﻿@model CategoryDto
+@{
+    ViewData["Title"] = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+}
+<div>
+    <div class="mb-md-3 mt-md-2 ">
+        <h2 class="fw-bold mb-5 text-uppercase">Category</h2>
+        <form asp-action="NewCategory" method="post">
+            <div data-mdb-input-init class="form-outline form-white mb-4">
+                <span asp-validation-for="Name" class="text-danger"></span>
+                <input type="text" asp-for="Name" class="form-control text-white bg-dark form-control-lg" placeholder="Title" />
+            </div>
+            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" name="submit" type="submit">Add</button>
+        </form>
+    </div>
+</div>
+@section ClientSideValidation {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

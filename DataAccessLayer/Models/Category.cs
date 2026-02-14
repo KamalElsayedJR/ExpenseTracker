@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Models
 {
-    public class Expense
+    public class Category
     {
         public int Id { get; set; }
-        public decimal Amount { get; set; }
-        public string Title { get; set; }
-        public DateOnly Date { get; set; }
+        public string Name { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
     }
 }

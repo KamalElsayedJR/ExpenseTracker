@@ -1,7 +1,10 @@
-﻿using BusinessLogicLayer.Dtos;
+﻿using AutoMapper;
+using BusinessLogicLayer.Dtos;
 using BusinessLogicLayer.Interfaces.Services;
+using DataAccessLayer.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PresentationLayer.Models;
 using System.Security.Claims;
 
@@ -11,9 +14,13 @@ namespace PresentationLayer.Controllers
     public class ExpenseController : Controller
     {
         private readonly IExpenseService _expenseService;
+        private readonly ICategoryService _categoryService;
+        private readonly IMapper _mapper;
 
-        public ExpenseController(IExpenseService expenseService)
+        public ExpenseController(IExpenseService expenseService,ICategoryService categoryService,IMapper mapper)
         {
+            _categoryService = categoryService;
+            this._mapper = mapper;
             _expenseService = expenseService;
         }
         public async Task<IActionResult> Index()
@@ -21,21 +28,28 @@ namespace PresentationLayer.Controllers
             var result = await _expenseService.GetExpensesByUserIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return View(result.Data);
         }
-        public IActionResult NewExpense()
+        public async Task<IActionResult> NewExpense()
         {
-            var model = new ExpenseDto
+            var cats = await _categoryService.GetAllCategoriesAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            
+            var model = new ExpenseCreateModel
             {
-                Date = DateOnly.FromDateTime(DateTime.Today)
+                Date = DateOnly.FromDateTime(DateTime.Today),
+                Category = cats.Data.Select(c => new SelectListItem
+                {
+                    Value = c.Id.ToString(),
+                    Text = c.Name
+                })
             };
 
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> NewExpense(ExpenseDto model)
+        public async Task<IActionResult> NewExpense(ExpenseCreateModel model)
         {
             if (ModelState.IsValid)
             {
-                var result = await _expenseService.AddExpenseAsync(model.Amount, model.Title, model.Date, User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var result = await _expenseService.AddExpenseAsync(model.Amount, model.Title, model.Date, User.FindFirstValue(ClaimTypes.NameIdentifier),model.CategoryId);
                 if (result.IsSuccess)
                 {
                     TempData["SuccessMessage"] = result.Message;

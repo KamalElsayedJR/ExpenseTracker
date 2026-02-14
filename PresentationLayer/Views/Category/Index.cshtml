@@ -1,20 +1,21 @@
-﻿@model IEnumerable<ExpenseDto>
+﻿@model IEnumerable<CategoryDto>
 @{
-    ViewData["Title"] = "Expense";
+    ViewData["Title"] = "Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
             @TempData["SuccessMessage"]
         </div>
-    }else if (TempData["ErrorMessage"] != null)
+    }
+    else if (TempData["ErrorMessage"] != null)
     {
         <div class="alert alert-danger position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
             @TempData["ErrorMessage"]
         </div>
     }
 }
-<h1>Your Expenses</h1>
+<h1>Your Category</h1>
 @{
     if (Model is null)
     {
@@ -31,7 +32,7 @@
                     <ul>
                         <li>
                             <button>
-                                <i class="material-icons"><a asp-controller="Expense" asp-action="NewExpense" class="btn text-white">AddNewExpense</a></i>
+                                <i class="material-icons"><a asp-controller="Category" asp-action="NewCategory" class="btn text-white">AddNewCategory</a></i>
                             </button>
                         </li>
                     </ul>
@@ -42,12 +43,8 @@
                 <table class="datatable">
                     <thead>
                         <tr>
-                            <th>Amount</th>
-                            <th>Title</th>
-                            <th>Date</th>
-                            <th>Category</th>
+                            <th>Name</th>
                             <th>Actions</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -55,18 +52,16 @@
                             foreach (var item in Model)
                             {
                                 <tr>
-                                    <td><span>$</span>@item.Amount</td>
-                                    <td>@item.Title</td>
-                                    <td>@item.Date</td>
-                                    <td><a class="text-white" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Category.Id">@item.Category.Name</a></td>
+                                    <td>@item.Name</td>
                                     <td>
-                                        <a asp-controller="Expense"
+                                        <a asp-controller="Category"
                                            asp-action="Edit"
                                            asp-route-id="@item.Id"
                                            class="btn btn-sm btn-primary">
                                             Edit
                                         </a>
-                                        <a asp-controller="Expense"
+
+                                        <a asp-controller="Category"
                                            asp-action="Delete"
                                            asp-route-id="@item.Id"
                                            class="btn btn-sm btn-danger">
@@ -76,12 +71,6 @@
                                 </tr>
                             }
                         }
-                        <tr class="table-dark fw-bold border-top">
-                            <td>
-                                Total: $@Model.Sum(x => x.Amount)
-                            </td>
-                            <td colspan="3"></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>

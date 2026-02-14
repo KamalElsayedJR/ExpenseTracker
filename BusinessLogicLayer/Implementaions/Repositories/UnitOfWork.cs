@@ -18,10 +18,11 @@ namespace BusinessLogicLayer.Implementaions.Repositories
             this.dbContext = dbContext;
             UserRepo = new UserRepository(dbContext);
             ExpenseRepo = new ExpenseRepository(dbContext);
+            CategoryRepo = new CategoryRepository(dbContext);
         }
         public IUserRepository UserRepo { get; }
         public IExpenseRepository ExpenseRepo { get ; }
-
+        public ICategoryRepository CategoryRepo { get; }
         public IGenericRespository<T> GenericRepo<T>() where T : class
         {
             var type = typeof(T).Name;
@@ -37,5 +38,6 @@ namespace BusinessLogicLayer.Implementaions.Repositories
         => await dbContext.DisposeAsync();
         public async Task<int> SaveChangesAsync()
         => await dbContext.SaveChangesAsync();
+
     }
 }

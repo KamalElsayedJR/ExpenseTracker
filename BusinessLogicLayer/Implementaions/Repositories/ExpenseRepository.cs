@@ -20,9 +20,9 @@ namespace BusinessLogicLayer.Implementaions.Repositories
         }
         public async Task<IEnumerable<Expense>> GetAllExpensesForSpcificUser(string userId)
         =>
-            await _dbContext.Expenses.Where(e => e.UserId == userId).ToListAsync();
+            await _dbContext.Expenses.Include(e=>e.Category).Where(e => e.UserId == userId).ToListAsync();
         public async Task<Expense> GetExpenseByIdForSpcificUser(int Id, string userId)
-        => await _dbContext.Expenses.FirstOrDefaultAsync(e => e.UserId == userId && e.Id == Id);
+        => await _dbContext.Expenses.Include(e => e.Category).FirstOrDefaultAsync(e => e.UserId == userId && e.Id == Id);
         
     }
 }

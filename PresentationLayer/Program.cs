@@ -25,6 +25,7 @@ namespace PresentationLayer
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IExpenseService, ExpenseService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
             {

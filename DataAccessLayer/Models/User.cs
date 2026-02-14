@@ -13,6 +13,7 @@ namespace DataAccessLayer.Models
         public string Email { get; set; }
         public string HashedPassword { get; set; }
         public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
         public User()
         {
             Id = Guid.NewGuid().ToString();

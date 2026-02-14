@@ -1,4 +1,4 @@
-﻿@model ExpenseDto
+﻿@model ExpenseCreateModel
 @{
     ViewData["Title"] = "Expense";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -24,6 +24,11 @@
             <div data-mdb-input-init class="form-outline form-white mb-4">
                 <span asp-validation-for="Date" class="text-danger"></span>
                 <input type="date" asp-for="Date" class="form-control text-white bg-dark form-control-lg" />
+            </div>
+            <div data-mdb-input-init class="form-outline form-white mb-4">
+                <select class="form-control text-white bg-dark form-control-lg4" asp-for="@Model.CategoryId"
+                        asp-items="@Model.Category">
+                </select>
             </div>
             <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" name="submit" type="submit">Add</button>
         </form>

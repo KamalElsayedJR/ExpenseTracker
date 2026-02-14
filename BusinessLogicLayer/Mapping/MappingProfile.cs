@@ -14,6 +14,7 @@ namespace BusinessLogicLayer.Mapping
         public MappingProfile()
         {
             CreateMap<Expense, ExpenseDto>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }
 }
