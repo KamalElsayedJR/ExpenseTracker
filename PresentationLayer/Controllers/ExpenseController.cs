@@ -67,10 +67,20 @@ namespace PresentationLayer.Controllers
                 TempData["ErrorMessage"] = result.Message;
                 return RedirectToAction(nameof(Index));
             }
-            return View(result.Data);
+            var cats = await _categoryService.GetAllCategoriesAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var m = new ExpenseCreateModel
+            {
+                Id = result.Data.Id,
+                Amount = result.Data.Amount,
+                Title = result.Data.Title,
+                Date = result.Data.Date,
+                CategoryId = result.Data.CategoryId,
+                Category = cats.Data.Select(c => new SelectListItem{Value = c.Id.ToString(),Text = c.Name})
+            };
+            return View(m);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(ExpenseDto model)
+        public async Task<IActionResult> Edit(ExpenseCreateModel model)
         {
             if (ModelState.IsValid)
             {

@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Interfaces.Repositories
 {
     public interface IExpenseRepository
     {
-        Task<IEnumerable<Expense>> GetAllExpensesForSpcificUser(string userId);
+        IQueryable<Expense> QueryUserExpenses(string userId);
         Task<Expense> GetExpenseByIdForSpcificUser(int Id, string userId);
     }
 }

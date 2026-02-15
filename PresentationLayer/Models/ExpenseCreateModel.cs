@@ -16,7 +16,5 @@ namespace PresentationLayer.Models
         public DateOnly Date { get; set; }
         public int CategoryId { get; set; }
         public IEnumerable<SelectListItem> Category { get; set; } = new List<SelectListItem>();
-
-
     }
 }

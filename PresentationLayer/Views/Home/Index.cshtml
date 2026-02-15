@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
     if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success position-fixed bottom-0 end-0 m-4 shadow" style="z-index:1050;" role="alert">
@@ -8,7 +9,127 @@
     }
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1 class="display-4 dashboard-title mb-5">@ViewData["Title"]</h1>
+<div class="row g-4">
+
+    <div class="col-md-3">
+        <div class="dashboard-card text-white p-4 rounded shadow">
+            <h6>Total Expenses</h6>
+            <h3>@Model.Total.ToString("C")</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card text-white p-4 rounded shadow">
+            <h6>Total Transactions</h6>
+            <h3>@Model.Count</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card text-white p-4 rounded shadow">
+            <h6>This Month</h6>
+            <h3>@Model.ThisMonth.ToString("C")</h3>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="dashboard-card text-white p-4 rounded shadow">
+            <h6>Last Month</h6>
+            <h3>@Model.LastMonth.ToString("C")</h3>
+        </div>
+    </div>
+
 </div>
+<hr class="my-5 text-secondary" />
+<div class="row g-4">
+    <div class="col-lg-7">
+        <h5 class="mb-3">Recent Expenses</h5>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.RecentExpenses != null && Model.RecentExpenses.Any())
+                    {
+                        foreach (var expense in Model.RecentExpenses)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="fw-bold">@expense.Title</div>
+                                    <small class="text-muted">@expense.CategoryName</small>
+                                </td>
+
+                                <td class="fw-bold text-success">
+                                    @expense.Amount.ToString("C")
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        @expense.Date.ToString("dd MMM yyyy")
+                                    </span>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">
+                                No recent expenses found.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <h5 class="mb-3">Categories</h5>
+        <canvas id="categoryChart" style="max-height:350px;"></canvas>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        const categoryLabels = @Html.Raw(Json.Serialize(Model.Categories.Select(c => c.CategoryName)));
+        const categoryData = @Html.Raw(Json.Serialize(Model.Categories.Select(c => c.TotalAmount)));
+
+        const ctx = document.getElementById('categoryChart');
+
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: categoryLabels,
+                datasets: [{
+                    data: categoryData,
+                    backgroundColor: [
+                        '#6f42c1',
+                        '#0d6efd',
+                        '#198754',
+                        '#dc3545',
+                        '#ffc107',
+                        '#20c997',
+                        '#6610f2'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: "white"
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

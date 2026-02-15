@@ -11,7 +11,7 @@
 }
 <div>
     <div class="mb-md-3 mt-md-2 ">
-        <h2 class="fw-bold mb-5 text-uppercase">Expense</h2>
+        <h2 class="fw-bold mb-5 text-uppercase">New Expense</h2>
         <form asp-action="NewExpense" method="post">
             <div data-mdb-input-init class="form-outline form-white mb-4">
                 <span asp-validation-for="Title" class="text-danger"></span>
@@ -30,7 +30,7 @@
                         asp-items="@Model.Category">
                 </select>
             </div>
-            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" name="submit" type="submit">Add</button>
+            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary btn-lg px-5" name="submit" type="submit">Add</button>
         </form>
     </div>
 </div>

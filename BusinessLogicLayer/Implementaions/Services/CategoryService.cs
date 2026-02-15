@@ -55,7 +55,7 @@ namespace BusinessLogicLayer.Implementaions.Services
         }
         public async Task<DataResponse<IEnumerable<CategoryDto>>> GetAllCategoriesAsync(string UserId)
         {
-            var cats = await _uoW.CategoryRepo.GetAllCategoriesAsync(UserId);
+            var cats = _uoW.CategoryRepo.GetAllCategoriesAsync(UserId);
             if (cats is not null)
             {
                 return new DataResponse<IEnumerable<CategoryDto>>

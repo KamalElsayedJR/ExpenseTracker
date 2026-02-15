@@ -17,6 +17,9 @@ namespace BusinessLogicLayer.Dtos
         public string Title { get; set; }
         [Required]
         public DateOnly Date { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        [Required]
         public Category Category { get; set; }
     }
 }

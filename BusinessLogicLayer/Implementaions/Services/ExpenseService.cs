@@ -112,7 +112,7 @@ namespace BusinessLogicLayer.Implementaions.Services
         }
         public async Task<DataResponse<IEnumerable<ExpenseDto>>> GetExpensesByUserIdAsync(string UserId)
         {
-            var expenses = await _uow.ExpenseRepo.GetAllExpensesForSpcificUser(UserId);
+            var expenses =  _uow.ExpenseRepo.QueryUserExpenses(UserId);
             if (expenses is null)
             {
                 return new DataResponse<IEnumerable<ExpenseDto>>

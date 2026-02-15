@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BusinessLogicLayer.Dtos
+{
+    public class CategoryExpenseDto
+    {
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
+        public decimal TotalAmount { get; set; }
+    }
+}

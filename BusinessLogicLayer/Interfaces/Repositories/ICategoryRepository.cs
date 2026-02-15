@@ -9,7 +9,7 @@ namespace BusinessLogicLayer.Interfaces.Repositories
 {
     public interface ICategoryRepository
     {
-        Task<IEnumerable<Category>> GetAllCategoriesAsync(string userId);
+        IQueryable<Category> GetAllCategoriesAsync(string userId);
         Task<Category> GetCategoryByIdAsync(int categoryId, string userId);
         void DeleteCategoryAsync(int categoryId, string userId);
         Task<bool> ExistCategoryAsync(string name);

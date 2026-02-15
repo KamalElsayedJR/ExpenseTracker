@@ -19,15 +19,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 gap-3">
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Auth" asp-action="Profile">Profile</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Expense" asp-action="index">Expenses</a>
@@ -36,6 +30,13 @@
                             <a class="nav-link text-white" asp-area="" asp-controller="Category" asp-action="index">Categories</a>
                         </li>
                     </ul>
+                    @* Profile *@
+                    <ul class="navbar-nav">
+                        <li class="nav-item text-end">
+                            <a class="nav-link text-primary" asp-area="" asp-controller="Auth" asp-action="Profile">Profile</a>
+                        </li>
+                    </ul>
+                    @* Profile *@
                     @* logout *@
                     <ul class="navbar-nav">
                         <li class="nav-item text-end">
@@ -48,6 +49,7 @@
         </nav>
         @* navbar end *@
     </header>
+
     <main role="main" class="pb-3 gradient-custom min-vh-100">
         <div class="container">
             <section>
@@ -63,14 +65,13 @@
                     </div>
                 </div>
             </section>
-
         </div>
     </main>
 
     @* Footer start*@
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - PresentationLayer - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - ExpenseTracker - <a class="text-primary" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     @* Footer end*@
@@ -79,6 +80,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("ClientSideValidation", required: false)
 </body>

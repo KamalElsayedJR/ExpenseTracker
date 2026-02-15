@@ -61,7 +61,7 @@ namespace PresentationLayer.Controllers
                 TempData["SuccessMessage"] = result.Message;
                 return RedirectToAction("Login");
             }
-            TempData["Errors"] = result.Message;
+            TempData["ErrorMessage"] = result.Message;
             return View(model);
         }
         [Authorize]

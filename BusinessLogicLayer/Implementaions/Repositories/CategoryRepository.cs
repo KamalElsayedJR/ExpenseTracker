@@ -22,8 +22,8 @@ namespace BusinessLogicLayer.Implementaions.Repositories
         public async Task<bool> ExistCategoryAsync(string name)
         => await dbContext.Categories.AnyAsync(c => c.Name.ToLower() == name.ToLower());
 
-        public async Task<IEnumerable<Category>> GetAllCategoriesAsync(string userId)
-        => await dbContext.Categories.Where(c => c.UserId == userId).ToListAsync();
+        public IQueryable<Category> GetAllCategoriesAsync(string userId)
+        => dbContext.Categories.Where(c => c.UserId == userId);
 
         public async Task<Category> GetCategoryByIdAsync(int categoryId, string userId)
         => await dbContext.Categories.Include(c=>c.Expenses).FirstOrDefaultAsync(c => c.Id == categoryId && c.UserId == userId);

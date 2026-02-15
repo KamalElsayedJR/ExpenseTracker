@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Security.Claims;
+using BusinessLogicLayer.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PresentationLayer.Models;
@@ -9,14 +11,17 @@ namespace PresentationLayer.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IDashboardService _dashboardService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IDashboardService dashboardService)
         {
             _logger = logger;
+            _dashboardService = dashboardService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var result = await _dashboardService.GetDashboardData(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return View(result);
         }
 
         public IActionResult Privacy()
